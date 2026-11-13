@@ -7,51 +7,185 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>Екран Суми</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0b0d12;color:#fff;font-family:-apple-system,Helvetica,Arial,sans-serif;height:100vh;overflow:hidden;padding:20px}
-.container{width:100%;height:100%;display:table;table-layout:fixed}
-.row-top{display:table-row;height:54%}
-.row-bottom{display:table-row;height:46%}
-.cell{display:table-cell;vertical-align:middle;padding:12px}
-.card{background:#161b26;border-radius:18px;padding:22px;height:100%;border:1px solid #262e40}
-.clock-time{font-size:110px;font-weight:700;line-height:1;color:#fff;font-variant-numeric:tabular-nums;-webkit-font-variant-numeric:tabular-nums}
-.clock-seconds{font-size:40px;color:#6c7a9c;font-weight:400;display:inline-block;width:65px}
-.clock-date{font-size:26px;color:#9ba8c7;margin-top:15px}
-.weather-title{font-size:20px;color:#9ba8c7;text-transform:uppercase;letter-spacing:1px}
-.weather-now-box{margin-top:15px}
-.weather-temp{font-size:80px;font-weight:700;color:#4da6ff;display:inline-block;vertical-align:middle}
-.weather-desc{display:inline-block;vertical-align:middle;margin-left:15px;font-size:24px;color:#e2e8f0}
-.weather-details{margin-top:15px;font-size:19px;color:#8b99b8}
-.forecast-table{width:100%;height:82%;margin-top:10px;border-collapse:collapse}
-.forecast-day{text-align:center;border-right:1px solid #262e40;padding:8px;width:25%}
-.forecast-day:last-child{border-right:none}
-.f-date{font-size:20px;color:#9ba8c7;margin-bottom:8px}
-.f-icon{font-size:34px;margin:6px 0}
-.f-temp{font-size:24px;font-weight:700;color:#fff}
-.currency-item{margin-top:16px;padding-bottom:14px;border-bottom:1px solid #262e40}
-.currency-item:last-child{border-bottom:none;padding-bottom:0}
-.curr-name{font-size:24px;color:#9ba8c7;display:inline-block;width:38%;vertical-align:middle}
-.curr-val-box{display:inline-block;width:60%;text-align:right;vertical-align:middle}
-.curr-sell{font-size:36px;font-weight:700;color:#4ade80}
-.curr-note{font-size:14px;color:#64748b;margin-top:10px}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0b0d12; color: #fff; font-family: -apple-system, Helvetica, Arial, sans-serif; height: 100vh; overflow: hidden; padding: 20px; }
+.container { width: 100%; height: 100%; display: table; table-layout: fixed; }
+.row-top { display: table-row; height: 54%; }
+.row-bottom { display: table-row; height: 46%; }
+.cell { display: table-cell; vertical-align: middle; padding: 12px; }
+.card { background: #161b26; border-radius: 18px; padding: 22px; height: 100%; border: 1px solid #262e40; }
+.clock-time { font-size: 110px; font-weight: 700; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; -webkit-font-variant-numeric: tabular-nums; }
+.clock-seconds { font-size: 40px; color: #6c7a9c; font-weight: 400; display: inline-block; width: 65px; }
+.clock-date { font-size: 26px; color: #9ba8c7; margin-top: 15px; }
+.weather-title { font-size: 20px; color: #9ba8c7; text-transform: uppercase; letter-spacing: 1px; }
+.weather-now-box { margin-top: 15px; }
+.weather-temp { font-size: 80px; font-weight: 700; color: #4da6ff; display: inline-block; vertical-align: middle; }
+.weather-desc { display: inline-block; vertical-align: middle; margin-left: 15px; font-size: 24px; color: #e2e8f0; }
+.weather-details { margin-top: 15px; font-size: 19px; color: #8b99b8; }
+.forecast-table { width: 100%; height: 82%; margin-top: 10px; border-collapse: collapse; }
+.forecast-day { text-align: center; border-right: 1px solid #262e40; padding: 8px; width: 25%; }
+.forecast-day:last-child { border-right: none; }
+.f-date { font-size: 20px; color: #9ba8c7; margin-bottom: 8px; }
+.f-icon { font-size: 34px; margin: 6px 0; }
+.f-temp { font-size: 24px; font-weight: 700; color: #fff; }
+.currency-item { margin-top: 16px; padding-bottom: 14px; border-bottom: 1px solid #262e40; }
+.currency-item:last-child { border-bottom: none; padding-bottom: 0; }
+.curr-name { font-size: 24px; color: #9ba8c7; display: inline-block; width: 38%; vertical-align: middle; }
+.curr-val-box { display: inline-block; width: 60%; text-align: right; vertical-align: middle; }
+.curr-sell { font-size: 36px; font-weight: 700; color: #4ade80; }
+.curr-note { font-size: 14px; color: #64748b; margin-top: 10px; }
 </style>
 </head>
 <body>
 <div class="container">
-<div class="row-top">
-<div class="cell" style="width:58%"><div class="card"><div class="clock-time"><span id="hm">00:00</span><span id="sec" class="clock-seconds">:00</span></div><div id="date" class="clock-date"></div></div></div>
-<div class="cell" style="width:42%"><div class="card"><div class="weather-title">Погода зараз • Суми</div><div class="weather-now-box"><div id="w-temp" class="weather-temp">--°</div><div id="w-desc" class="weather-desc">Оновлення...</div></div><div id="w-details" class="weather-details">Вітер: -- м/с</div></div></div>
+  <div class="row-top">
+    <div class="cell" style="width:58%">
+      <div class="card">
+        <div class="clock-time"><span id="hm">00:00</span><span id="sec" class="clock-seconds">:00</span></div>
+        <div id="date" class="clock-date"></div>
+      </div>
+    </div>
+    <div class="cell" style="width:42%">
+      <div class="card">
+        <div class="weather-title">Погода зараз • Суми</div>
+        <div class="weather-now-box">
+          <div id="w-temp" class="weather-temp">--°</div>
+          <div id="w-desc" class="weather-desc">Оновлення...</div>
+        </div>
+        <div id="w-details" class="weather-details">Вітер: -- м/с</div>
+      </div>
+    </div>
+  </div>
+  <div class="row-bottom">
+    <div class="cell" style="width:58%">
+      <div class="card">
+        <div class="weather-title">Прогноз на 4 дні</div>
+        <table class="forecast-table">
+          <tr>
+            <td class="forecast-day"><div id="fd1" class="f-date">--.--</div><div id="fi1" class="f-icon">⛅</div><div id="ft1" class="f-temp">--°</div></td>
+            <td class="forecast-day"><div id="fd2" class="f-date">--.--</div><div id="fi2" class="f-icon">⛅</div><div id="ft2" class="f-temp">--°</div></td>
+            <td class="forecast-day"><div id="fd3" class="f-date">--.--</div><div id="fi3" class="f-icon">⛅</div><div id="ft3" class="f-temp">--°</div></td>
+            <td class="forecast-day"><div id="fd4" class="f-date">--.--</div><div id="fi4" class="f-icon">⛅</div><div id="ft4" class="f-temp">--°</div></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="cell" style="width:42%">
+      <div class="card">
+        <div class="weather-title">Курс валют • UAH</div>
+        <div class="currency-item"><span class="curr-name">USD</span><div class="curr-val-box"><span id="usd-sell" class="curr-sell">--.-- ₴</span></div></div>
+        <div class="currency-item"><span class="curr-name">EUR</span><div class="curr-val-box"><span id="eur-sell" class="curr-sell">--.-- ₴</span></div></div>
+        <div id="curr-date" class="curr-note">Оновлення...</div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="row-bottom">
-<div class="cell" style="width:58%"><div class="card"><div class="weather-title">Прогноз на 4 дні</div><table class="forecast-table"><tr>
-<td class="forecast-day"><div id="fd1" class="f-date">--.--</div><div id="fi1" class="f-icon">⛅</div><div id="ft1" class="f-temp">--°</div></td>
-<td class="forecast-day"><div id="fd2" class="f-date">--.--</div><div id="fi2" class="f-icon">⛅</div><div id="ft2" class="f-temp">--°</div></td>
-<td class="forecast-day"><div id="fd3" class="f-date">--.--</div><div id="fi3" class="f-icon">⛅</div><div id="ft3" class="f-temp">--°</div></td>
-<td class="forecast-day"><div id="fd4" class="f-date">--.--</div><div id="fi4" class="f-icon">⛅</div><div id="ft4" class="f-temp">--°</div></td>
-</tr></table></div></div>
-<div class="cell" style="width:42%"><div class="card"><div class="weather-title">Курс валют • UAH</div><div class="currency-item"><span class="curr-name">USD</span><div class="curr-val-box"><span id="usd-sell" class="curr-sell">--.-- ₴</span></div></div><div class="currency-item"><span class="curr-name">EUR</span><div class="curr-val-box"><span id="eur-sell" class="curr-sell">--.-- ₴</span></div></div><div id="curr-date" class="curr-note">Оновлення...</div></div></div>
-</div>
-</div>
-<script>var du=new Array("Неділя","Понеділок","Вівторок","Середа","Четвер","П'ятниця","Субота"),ds=new Array("Нд","Пн","Вт","Ср","Чт","Пт","Сб"),mu=new Array("січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"),lm=-1;function pad(n){return n<10?"0"+n:""+n}function tick(){var d=new Date(),m=d.getMinutes();document.getElementById("sec").textContent=":"+pad(d.getSeconds());if(m!==lm){lm=m;document.getElementById("hm").textContent=pad(d.getHours())+":"+pad(m);document.getElementById("date").textContent=du.slice(d.getDay(),d.getDay()+1).join("")+", "+d.getDate()+" "+mu.slice(d.getMonth(),d.getMonth()+1).join("")+" "+d.getFullYear()}}setInterval(tick,1000);tick();function wTxt(c){if(c===0)return"Ясно";if(c===1||c===2)return"Мінливо";if(c===3)return"Хмарно";if(c===45||c===48)return"Туман";if(c>=51&&c<=67)return"Дощ";if(c>=71&&c<=77)return"Сніг";if(c>=80&&c<=82)return"Злива";if(c>=85&&c<=86)return"Снігопад";if(c>=95)return"Гроза";return"Хмарно"}function wIco(c){if(c===0)return"☀️";if(c===1||c===2)return"⛅";if(c===3)return"☁️";if(c===45||c===48)return"🌫️";if(c>=51&&c<=67)return"🌧️";if(c>=71&&c<=77)return"❄️";if(c>=80&&c<=82)return"🌦️";if(c>=85&&c<=86)return"🌨️";if(c>=95)return"⛈️";return"☁️"}function getW(){var x=new XMLHttpRequest();x.open("GET","https://open-meteo.com",true);x.onreadystatechange=function(){if(x.readyState===4){if(x.status===200){var data=JSON.parse(x.responseText),cw=data.current_weather,t=Math.round(cw.temperature);document.getElementById("w-temp").textContent=(t>0?"+":"")+t+"°";document.getElementById("w-desc").textContent=wIco(cw.weathercode)+" "+wTxt(cw.weathercode);document.getElementById("w-details").textContent="Вітер: "+(cw.windspeed/3.6).toFixed(1)+" м/с";var dl=data.daily;for(var i=1;i<=4;i++){var s=dl.time.slice(i,i+1).join(""),dt=new Date(parseInt(s.substr(0,4),10),parseInt(s.substr(5,2),10)-1,parseInt(s.substr(8,2),10)),wc=Number(dl.weathercode.slice(i,i+1).join("")),tx=Math.round(Number(dl.temperature_2m_max.slice(i,i+1).join(""))),tn=Math.round(Number(dl.temperature_2m_min.slice(i,i+1).join("")));document.getElementById("fd"+i).textContent=ds.slice(dt.getDay(),dt.getDay()+1).join("")+", "+pad(dt.getDate())+"."+pad(dt.getMonth()+1);document.getElementById("fi"+i).textContent=wIco(wc);document.getElementById("ft"+i).textContent=(tx>0?"+"+tx:tx)+"° / "+(tn>0?"+"+tn:tn)+"°"}}else{document.getElementById("w-desc").textContent="Помилка "+x.status}}};x.send()}function getC(){var x1=new XMLHttpRequest();x1.open("GET","https://jsdelivr.net",true);x1.onreadystatechange=function(){if(x1.readyState===4){if(x1.status===200){var d=JSON.parse(x1.responseText);if(d&&d.usd&&d.usd.uah){document.getElementById("usd-sell").textContent=d.usd.uah.toFixed(2)+" ₴";document.getElementById("curr-date").textContent="Курс на "+d.date}}else{document.getElementById("curr-date").textContent="Помилка "+x1.status}}};x1.send();var x2=new XMLHttpRequest();x2.open("GET","https://jsdelivr.net",true);x2.onreadystatechange=function(){if(x2.readyState===4&&x2.status===200){var d=JSON.parse(x2.responseText);if(d&&d.eur&&d.eur.uah){document.getElementById("eur-sell").textContent=d.eur.uah.toFixed(2)+" ₴"}}};x2.send()}getW();getC();setInterval(getW,1800000);setInterval(getC,1800000);</script>
+
+<script>
+var du = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
+var ds = ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+var mu = ["січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"];
+var lm = -1;
+
+function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+function tick() {
+  var d = new Date();
+  var m = d.getMinutes();
+  document.getElementById("sec").textContent = ":" + pad(d.getSeconds());
+  if (m !== lm) {
+    lm = m;
+    document.getElementById("hm").textContent = pad(d.getHours()) + ":" + pad(m);
+    document.getElementById("date").textContent = du[d.getDay()] + ", " + d.getDate() + " " + mu[d.getMonth()] + " " + d.getFullYear();
+  }
+}
+setInterval(tick, 1000);
+tick();
+
+function wTxt(c) {
+  if (c === 0) return "Ясно";
+  if (c === 1 || c === 2) return "Мінливо";
+  if (c === 3) return "Хмарно";
+  if (c === 45 || c === 48) return "Туман";
+  if (c >= 51 && c <= 67) return "Дощ";
+  if (c >= 71 && c <= 77) return "Сніг";
+  if (c >= 80 && c <= 82) return "Злива";
+  if (c >= 85 && c <= 86) return "Снігопад";
+  if (c >= 95) return "Гроза";
+  return "Хмарно";
+}
+
+function wIco(c) {
+  if (c === 0) return "☀️";
+  if (c === 1 || c === 2) return "⛅";
+  if (c === 3) return "☁️";
+  if (c === 45 || c === 48) return "🌫️";
+  if (c >= 51 && c <= 67) return "🌧️";
+  if (c >= 71 && c <= 77) return "❄️";
+  if (c >= 80 && c <= 82) return "🌦️";
+  if (c >= 85 && c <= 86) return "🌨️";
+  if (c >= 95) return "⛈️";
+  return "☁️";
+}
+
+function loadWeather() {
+  var x = new XMLHttpRequest();
+  x.open("GET", "https://open-meteo.com", true);
+  x.onload = function() {
+    try {
+      var data = JSON.parse(x.responseText);
+      var cw = data.current_weather;
+      var t = Math.round(cw.temperature);
+      document.getElementById("w-temp").textContent = (t > 0 ? "+" : "") + t + "°";
+      document.getElementById("w-desc").textContent = wIco(cw.weathercode) + " " + wTxt(cw.weathercode);
+      document.getElementById("w-details").textContent = "Вітер: " + (cw.windspeed / 3.6).toFixed(1) + " м/с";
+
+      var dl = data.daily;
+      for (var i = 1; i <= 4; i++) {
+        var s = dl.time[i];
+        var dt = new Date(Number(s.slice(0, 4)), Number(s.slice(5, 7)) - 1, Number(s.slice(8, 10)));
+        var tx = Math.round(dl.temperature_2m_max[i]);
+        var tn = Math.round(dl.temperature_2m_min[i]);
+        document.getElementById("fd" + i).textContent = ds[dt.getDay()] + ", " + pad(dt.getDate()) + "." + pad(dt.getMonth() + 1);
+        document.getElementById("fi" + i).textContent = wIco(dl.weathercode[i]);
+        document.getElementById("ft" + i).textContent = (tx > 0 ? "+" + tx : tx) + "° / " + (tn > 0 ? "+" + tn : tn) + "°";
+      }
+    } catch (e) {
+      document.getElementById("w-desc").textContent = "Помилка: " + e.message;
+    }
+  };
+  x.onerror = function() {
+    document.getElementById("w-desc").textContent = "Мережа заблокована";
+  };
+  x.send();
+}
+
+function loadRates() {
+  var x = new XMLHttpRequest();
+  x.open("GET", "https://er-api.com", true);
+  x.onload = function() {
+    try {
+      var d = JSON.parse(x.responseText);
+      var uah = d.rates.UAH;
+      var eur = uah / d.rates.EUR;
+      document.getElementById("usd-sell").textContent = uah.toFixed(2) + " ₴";
+      document.getElementById("eur-sell").textContent = eur.toFixed(2) + " ₴";
+      var n = new Date();
+      document.getElementById("curr-date").textContent = "Оновлено о " + pad(n.getHours()) + ":" + pad(n.getMinutes());
+    } catch (e) {
+      document.getElementById("curr-date").textContent = "Помилка: " + e.message;
+    }
+  };
+  x.onerror = function() {
+    document.getElementById("curr-date").textContent = "Мережа заблокована";
+  };
+  x.send();
+}
+
+loadWeather();
+loadRates();
+setInterval(loadWeather, 1800000);
+setInterval(loadRates, 1800000);
+</script>
 </body>
 </html>
