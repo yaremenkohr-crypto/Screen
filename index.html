@@ -8,48 +8,54 @@
 <title>Екран Суми</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0b0d12;color:#fff;font-family:-apple-system,Helvetica,Arial,sans-serif;height:100vh;overflow:hidden;padding:18px}
+body{background:#0b0d12;color:#fff;font-family:-apple-system,Helvetica,Arial,sans-serif;height:100vh;overflow:hidden;padding:20px}
 .container{width:100%;height:100%;display:table;table-layout:fixed}
-.row-top{display:table-row;height:44%}
-.row-bottom{display:table-row;height:56%}
-.cell{display:table-cell;vertical-align:middle;padding:10px}
-.card{background:#161b26;border-radius:18px;padding:20px;height:100%;border:1px solid #262e40;overflow:hidden}
-.clock-time{font-size:112px;font-weight:700;line-height:1;color:#fff;font-variant-numeric:tabular-nums;-webkit-font-variant-numeric:tabular-nums}
+.row-top{display:table-row;height:54%}
+.row-bottom{display:table-row;height:46%}
+.cell{display:table-cell;vertical-align:middle;padding:12px}
+.card{background:#161b26;border-radius:18px;padding:22px;height:100%;border:1px solid #262e40}
+.clock-time{font-size:110px;font-weight:700;line-height:1;color:#fff;font-variant-numeric:tabular-nums;-webkit-font-variant-numeric:tabular-nums}
 .clock-seconds{font-size:40px;color:#6c7a9c;font-weight:400;display:inline-block;width:65px}
-.clock-date{font-size:26px;color:#9ba8c7;margin-top:14px}
-.title{font-size:18px;color:#9ba8c7;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
-.weather-img{width:100%;height:auto;max-height:280px;object-fit:contain;border-radius:8px}
-.curr-img{width:100%;max-width:340px;height:auto;border-radius:8px;margin-top:5px}
+.clock-date{font-size:26px;color:#9ba8c7;margin-top:15px}
+.weather-title{font-size:20px;color:#9ba8c7;text-transform:uppercase;letter-spacing:1px}
+.weather-now-box{margin-top:15px}
+.weather-temp{font-size:80px;font-weight:700;color:#4da6ff;display:inline-block;vertical-align:middle}
+.weather-desc{display:inline-block;vertical-align:middle;margin-left:15px;font-size:24px;color:#e2e8f0}
+.weather-details{margin-top:15px;font-size:19px;color:#8b99b8}
+.forecast-table{width:100%;height:82%;margin-top:10px;border-collapse:collapse}
+.forecast-day{text-align:center;border-right:1px solid #262e40;padding:8px;width:25%}
+.forecast-day:last-child{border-right:none}
+.f-date{font-size:20px;color:#9ba8c7;margin-bottom:8px}
+.f-icon{font-size:34px;margin:6px 0}
+.f-temp{font-size:24px;font-weight:700;color:#fff}
+.currency-item{margin-top:16px;padding-bottom:14px;border-bottom:1px solid #262e40}
+.currency-item:last-child{border-bottom:none;padding-bottom:0}
+.curr-name{font-size:24px;color:#9ba8c7;display:inline-block;width:38%;vertical-align:middle}
+.curr-val-box{display:inline-block;width:60%;text-align:right;vertical-align:middle}
+.curr-sell{font-size:36px;font-weight:700;color:#4ade80}
+.curr-buy{font-size:15px;color:#7c8ba8;display:block}
+.curr-note{font-size:14px;color:#64748b;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="container">
 <div class="row-top">
-<div class="cell" style="width:58%">
-  <div class="card">
-    <div class="clock-time"><span id="hm">00:00</span><span id="sec" class="clock-seconds">:00</span></div>
-    <div id="date" class="clock-date">Завантаження дати...</div>
-  </div>
-</div>
-<div class="cell" style="width:42%">
-  <div class="card">
-    <div class="title">Курс валют (USD / EUR)</div>
-    <img id="c-img" class="curr-img" src="https://minfin.com.ua" alt="Курс валют">
-  </div>
-</div>
+<div class="cell" style="width:58%"><div class="card"><div class="clock-time"><span id="hm">00:00</span><span id="sec" class="clock-seconds">:00</span></div><div id="date" class="clock-date"></div></div></div>
+<div class="cell" style="width:42%"><div class="card"><div class="weather-title">Погода зараз • Суми</div><div class="weather-now-box"><div id="w-temp" class="weather-temp">--°</div><div id="w-desc" class="weather-desc">Оновлення...</div></div><div id="w-details" class="weather-details">Вітер: -- м/с</div></div></div>
 </div>
 <div class="row-bottom">
-<div class="cell" colspan="2" style="width:100%">
-  <div class="card">
-    <div class="title">Погода зараз та прогноз на 3 дні • Суми</div>
-    <img id="w-img" class="weather-img" src="https://wttr.in" alt="Погода в Сумах">
-  </div>
+<div class="cell" style="width:58%"><div class="card"><div class="weather-title">Прогноз на 4 дні</div><table class="forecast-table"><tr>
+<td class="forecast-day"><div id="fd1" class="f-date">--.--</div><div id="fi1" class="f-icon">⛅</div><div id="ft1" class="f-temp">--°</div></td>
+<td class="forecast-day"><div id="fd2" class="f-date">--.--</div><div id="fi2" class="f-icon">⛅</div><div id="ft2" class="f-temp">--°</div></td>
+<td class="forecast-day"><div id="fd3" class="f-date">--.--</div><div id="fi3" class="f-icon">⛅</div><div id="ft3" class="f-temp">--°</div></td>
+<td class="forecast-day"><div id="fd4" class="f-date">--.--</div><div id="fi4" class="f-icon">⛅</div><div id="ft4" class="f-temp">--°</div></td>
+</tr></table></div></div>
+<div class="cell" style="width:42%"><div class="card"><div id="curr-title" class="weather-title">Курс валют • UAH</div><div class="currency-item"><span class="curr-name">USD</span><div class="curr-val-box"><span id="usd-sell" class="curr-sell">--.-- ₴</span><span id="usd-buy" class="curr-buy"></span></div></div><div class="currency-item"><span class="curr-name">EUR</span><div class="curr-val-box"><span id="eur-sell" class="curr-sell">--.-- ₴</span><span id="eur-buy" class="curr-buy"></span></div></div><div id="curr-date" class="curr-note">Оновлення...</div></div></div>
 </div>
 </div>
-</div>
-
 <script>
 var du = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
+var ds = ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 var mu = ["січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"];
 var lm = -1;
 
@@ -68,11 +74,121 @@ function tick() {
 setInterval(tick, 1000);
 tick();
 
-setInterval(function() {
-  var t = new Date().getTime();
-  document.getElementById("w-img").src = "https://wttr.in?t=" + t;
-  document.getElementById("c-img").src = "https://minfin.com.ua?t=" + t;
-}, 1800000);
-</script>
-</body>
-</html>
+function wInfo(c) {
+  if (c === 0) return ["Ясно", "☀️"];
+  if (c === 1 || c === 2) return ["Мінливо", "⛅"];
+  if (c === 3) return ["Хмарно", "☁️"];
+  if (c === 45 || c === 48) return ["Туман", "🌫️"];
+  if (c >= 51 && c <= 67) return ["Дощ", "🌧️"];
+  if (c >= 71 && c <= 77) return ["Сніг", "❄️"];
+  if (c >= 80 && c <= 82) return ["Злива", "🌦️"];
+  if (c >= 85 && c <= 86) return ["Снігопад", "🌨️"];
+  if (c >= 95) return ["Гроза", "⛈️"];
+  return ["Хмарно", "☁️"];
+}
+
+function getW() {
+  var x = new XMLHttpRequest();
+  x.open("GET", "https://open-meteo.com", true);
+  x.onreadystatechange = function() {
+    if (x.readyState === 4 && x.status === 200) {
+      var data = JSON.parse(x.responseText);
+      var cw = data.current_weather;
+      var inf = wInfo(cw.weathercode);
+      var t = Math.round(cw.temperature);
+      document.getElementById("w-temp").textContent = (t > 0 ? "+" : "") + t + "°";
+      document.getElementById("w-desc").textContent = inf[1] + " " + inf[0];
+      document.getElementById("w-details").textContent = "Вітер: " + (cw.windspeed / 3.6).toFixed(1) + " м/с";
+      var dl = data.daily;
+      for (var i = 1; i <= 4; i++) {
+        var s = dl.time[i];
+        var dt = new Date(parseInt(s.substr(0,4),10), parseInt(s.substr(5,2),10)-1, parseInt(s.substr(8,2),10));
+        var di = wInfo(dl.weathercode[i]);
+        var tx = Math.round(dl.temperature_2m_max[i]);
+        var tn = Math.round(dl.temperature_2m_min[i]);
+        document.getElementById("fd" + i).textContent = ds[dt.getDay()] + ", " + pad(dt.getDate()) + "." + pad(dt.getMonth()+1);
+        document.getElementById("fi" + i).textContent = di[1];
+        document.getElementById("ft" + i).textContent = (tx > 0 ? "+" + tx : tx) + "° / " + (tn > 0 ? "+" + tn : tn) + "°";
+      }
+    }
+  };
+  x.send();
+}
+
+function getNBU() {
+  var x = new XMLHttpRequest();
+  x.open("GET", "https://bank.gov.ua", true);
+  x.onreadystatechange = function() {
+    if (x.readyState === 4) {
+      if (x.status === 200) {
+        var l = JSON.parse(x.responseText);
+        var dt = "";
+        for (var i = 0; i < l.length; i++) {
+          if (l[i].cc === "USD") {
+            document.getElementById("usd-sell").textContent = l[i].rate.toFixed(2) + " ₴";
+            dt = l[i].exchangedate;
+          }
+          if (l[i].cc === "EUR") {
+            document.getElementById("eur-sell").textContent = l[i].rate.toFixed(2) + " ₴";
+          }
+        }
+        document.getElementById("curr-title").textContent = "Офіційний курс НБУ";
+        document.getElementById("curr-date").textContent = "Станом на " + dt;
+      } else {
+        getFallback();
+      }
+    }
+  };
+  x.send();
+}
+
+function getFallback() {
+  var x = new XMLHttpRequest();
+  x.open("GET", "https://er-api.com", true);
+  x.onreadystatechange = function() {
+    if (x.readyState === 4 && x.status === 200) {
+      var d = JSON.parse(x.responseText);
+      if (d && d.rates && d.rates.UAH && d.rates.EUR) {
+        var u = d.rates.UAH;
+        var e = u / d.rates.EUR;
+        document.getElementById("usd-sell").textContent = u.toFixed(2) + " ₴";
+        document.getElementById("eur-sell").textContent = e.toFixed(2) + " ₴";
+        document.getElementById("curr-title").textContent = "Ринковий курс • UAH";
+        var n = new Date();
+        document.getElementById("curr-date").textContent = "Оновлено о " + pad(n.getHours()) + ":" + pad(n.getMinutes());
+      }
+    }
+  };
+  x.send();
+}
+
+function getC() {
+  var x = new XMLHttpRequest();
+  x.open("GET", "https://monobank.ua", true);
+  x.onreadystatechange = function() {
+    if (x.readyState === 4) {
+      if (x.status === 200) {
+        var l = JSON.parse(x.responseText);
+        for (var i = 0; i < l.length; i++) {
+          if (l[i].currencyCodeA === 840 && l[i].currencyCodeB === 980) {
+            document.getElementById("usd-sell").textContent = l[i].rateSell.toFixed(2) + " ₴";
+            document.getElementById("usd-buy").textContent = "купівля: " + l[i].rateBuy.toFixed(2) + " ₴";
+          }
+          if (l[i].currencyCodeA === 978 && l[i].currencyCodeB === 980) {
+            document.getElementById("eur-sell").textContent = l[i].rateSell.toFixed(2) + " ₴";
+            document.getElementById("eur-buy").textContent = "купівля: " + l[i].rateBuy.toFixed(2) + " ₴";
+          }
+        }
+        document.getElementById("curr-title").textContent = "Продаж • Monobank";
+        var n = new Date();
+        document.getElementById("curr-date").textContent = "Оновлено о " + pad(n.getHours()) + ":" + pad(n.getMinutes());
+      } else {
+        getNBU();
+      }
+    }
+  };
+  x.send();
+}
+
+getW();
+getC();
