@@ -82,10 +82,14 @@ body { background: #0b0d12; color: #fff; font-family: -apple-system, Helvetica, 
 </div>
 
 <script>
-var du = ["Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота"];
-var ds = ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
-var mu = ["січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"];
+var duStr = "Неділя,Понеділок,Вівторок,Середа,Четвер,П'ятниця,Субота";
+var dsStr = "Нд,Пн,Вт,Ср,Чт,Пт,Сб";
+var muStr = "січня,лютого,березня,квітня,травня,червня,липня,серпня,вересня,жовтня,листопада,грудня";
 var lm = -1;
+
+function getItem(arr, idx) {
+  return arr.slice(idx, idx + 1).pop();
+}
 
 function pad(n) { return n < 10 ? "0" + n : "" + n; }
 
@@ -96,7 +100,9 @@ function tick() {
   if (m !== lm) {
     lm = m;
     document.getElementById("hm").textContent = pad(d.getHours()) + ":" + pad(m);
-    document.getElementById("date").textContent = du[d.getDay()] + ", " + d.getDate() + " " + mu[d.getMonth()] + " " + d.getFullYear();
+    var dayName = getItem(duStr.split(","), d.getDay());
+    var monthName = getItem(muStr.split(","), d.getMonth());
+    document.getElementById("date").textContent = dayName + ", " + d.getDate() + " " + monthName + " " + d.getFullYear();
   }
 }
 setInterval(tick, 1000);
@@ -141,13 +147,15 @@ function loadWeather() {
       document.getElementById("w-details").textContent = "Вітер: " + (cw.windspeed / 3.6).toFixed(1) + " м/с";
 
       var dl = data.daily;
+      var dsArr = dsStr.split(",");
       for (var i = 1; i <= 4; i++) {
-        var s = dl.time[i];
+        var s = getItem(dl.time, i);
         var dt = new Date(Number(s.slice(0, 4)), Number(s.slice(5, 7)) - 1, Number(s.slice(8, 10)));
-        var tx = Math.round(dl.temperature_2m_max[i]);
-        var tn = Math.round(dl.temperature_2m_min[i]);
-        document.getElementById("fd" + i).textContent = ds[dt.getDay()] + ", " + pad(dt.getDate()) + "." + pad(dt.getMonth() + 1);
-        document.getElementById("fi" + i).textContent = wIco(dl.weathercode[i]);
+        var wc = getItem(dl.weathercode, i);
+        var tx = Math.round(getItem(dl.temperature_2m_max, i));
+        var tn = Math.round(getItem(dl.temperature_2m_min, i));
+        document.getElementById("fd" + i).textContent = getItem(dsArr, dt.getDay()) + ", " + pad(dt.getDate()) + "." + pad(dt.getMonth() + 1);
+        document.getElementById("fi" + i).textContent = wIco(wc);
         document.getElementById("ft" + i).textContent = (tx > 0 ? "+" + tx : tx) + "° / " + (tn > 0 ? "+" + tn : tn) + "°";
       }
     } catch (e) {
