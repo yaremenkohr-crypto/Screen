@@ -108,86 +108,100 @@ function tick() {
 setInterval(tick, 1000);
 tick();
 
-function wTxt(c) {
-  if (c === 0) return "Ясно";
-  if (c === 1 || c === 2) return "Мінливо";
-  if (c === 3) return "Хмарно";
-  if (c === 45 || c === 48) return "Туман";
-  if (c >= 51 && c <= 67) return "Дощ";
-  if (c >= 71 && c <= 77) return "Сніг";
-  if (c >= 80 && c <= 82) return "Злива";
-  if (c >= 85 && c <= 86) return "Снігопад";
-  if (c >= 95) return "Гроза";
-  return "Хмарно";
+function metIcon(sym) {
+  if (!sym) return "⛅";
+  if (sym.indexOf("clearsky") !== -1) return "☀️";
+  if (sym.indexOf("fair") !== -1 || sym.indexOf("partlycloudy") !== -1) return "⛅";
+  if (sym.indexOf("cloudy") !== -1) return "☁️";
+  if (sym.indexOf("fog") !== -1) return "🌫️";
+  if (sym.indexOf("thunder") !== -1) return "⛈️";
+  if (sym.indexOf("snow") !== -1 || sym.indexOf("sleet") !== -1) return "❄️";
+  if (sym.indexOf("rain") !== -1) return "🌧️";
+  return "⛅";
 }
 
-function wIco(c) {
-  if (c === 0) return "☀️";
-  if (c === 1 || c === 2) return "⛅";
-  if (c === 3) return "☁️";
-  if (c === 45 || c === 48) return "🌫️";
-  if (c >= 51 && c <= 67) return "🌧️";
-  if (c >= 71 && c <= 77) return "❄️";
-  if (c >= 80 && c <= 82) return "🌦️";
-  if (c >= 85 && c <= 86) return "🌨️";
-  if (c >= 95) return "⛈️";
-  return "☁️";
+function metText(sym) {
+  if (!sym) return "Хмарно";
+  if (sym.indexOf("clearsky") !== -1) return "Ясно";
+  if (sym.indexOf("fair") !== -1 || sym.indexOf("partlycloudy") !== -1) return "Мінливо";
+  if (sym.indexOf("cloudy") !== -1) return "Хмарно";
+  if (sym.indexOf("fog") !== -1) return "Туман";
+  if (sym.indexOf("thunder") !== -1) return "Гроза";
+  if (sym.indexOf("snow") !== -1 || sym.indexOf("sleet") !== -1) return "Сніг";
+  if (sym.indexOf("rain") !== -1) return "Дощ";
+  return "Хмарно";
 }
 
 function loadWeather() {
   var x = new XMLHttpRequest();
-  x.open("GET", "https://open-meteo.com", true);
+  x.open("GET", "https://met.no", true);
   x.onload = function() {
     try {
       var data = JSON.parse(x.responseText);
-      var cw = data.current_weather;
-      var t = Math.round(cw.temperature);
+      var list = data.properties.timeseries;
+      var nowItem = getItem(list, 0);
+      var det = nowItem.data.instant.details;
+      var t = Math.round(det.air_temperature);
+      var sym = nowItem.data.next_1_hours ? nowItem.data.next_1_hours.summary.symbol_code : "cloudy";
       document.getElementById("w-temp").textContent = (t > 0 ? "+" : "") + t + "°";
-      document.getElementById("w-desc").textContent = wIco(cw.weathercode) + " " + wTxt(cw.weathercode);
-      document.getElementById("w-details").textContent = "Вітер: " + (cw.windspeed / 3.6).toFixed(1) + " м/с";
+      document.getElementById("w-desc").textContent = metIcon(sym) + " " + metText(sym);
+      document.getElementById("w-details").textContent = "Вітер: " + det.wind_speed.toFixed(1) + " м/с • Вологість: " + Math.round(det.relative_humidity) + "%";
 
-      var dl = data.daily;
       var dsArr = dsStr.split(",");
-      for (var i = 1; i <= 4; i++) {
-        var s = getItem(dl.time, i);
-        var dt = new Date(Number(s.slice(0, 4)), Number(s.slice(5, 7)) - 1, Number(s.slice(8, 10)));
-        var wc = getItem(dl.weathercode, i);
-        var tx = Math.round(getItem(dl.temperature_2m_max, i));
-        var tn = Math.round(getItem(dl.temperature_2m_min, i));
-        document.getElementById("fd" + i).textContent = getItem(dsArr, dt.getDay()) + ", " + pad(dt.getDate()) + "." + pad(dt.getMonth() + 1);
-        document.getElementById("fi" + i).textContent = wIco(wc);
-        document.getElementById("ft" + i).textContent = (tx > 0 ? "+" + tx : tx) + "° / " + (tn > 0 ? "+" + tn : tn) + "°";
+      var found = 0;
+      var todayStr = new Date().toISOString().slice(0, 10);
+      var usedDays = {};
+      usedDays[todayStr] = true;
+
+      for (var i = 1; i < list.length && found < 4; i++) {
+        var item = getItem(list, i);
+        var dStr = item.time.slice(0, 10);
+        var hrStr = item.time.slice(11, 13);
+        if (!usedDays[dStr] && (hrStr === "12" || hrStr === "11" || hrStr === "13")) {
+          usedDays[dStr] = true;
+          found++;
+          var dt = new Date(Number(dStr.slice(0, 4)), Number(dStr.slice(5, 7)) - 1, Number(dStr.slice(8, 10)));
+          var fTemp = Math.round(item.data.instant.details.air_temperature);
+          var fSym = item.data.next_6_hours ? item.data.next_6_hours.summary.symbol_code : "cloudy";
+          document.getElementById("fd" + found).textContent = getItem(dsArr, dt.getDay()) + ", " + pad(dt.getDate()) + "." + pad(dt.getMonth() + 1);
+          document.getElementById("fi" + found).textContent = metIcon(fSym);
+          document.getElementById("ft" + found).textContent = (fTemp > 0 ? "+" + fTemp : fTemp) + "°";
+        }
       }
     } catch (e) {
-      document.getElementById("w-desc").textContent = "Помилка: " + e.message;
+      document.getElementById("w-desc").textContent = "Помилка даних";
     }
   };
   x.onerror = function() {
-    document.getElementById("w-desc").textContent = "Мережа заблокована";
+    document.getElementById("w-desc").textContent = "Помилка мережі";
   };
   x.send();
 }
 
 function loadRates() {
-  var x = new XMLHttpRequest();
-  x.open("GET", "https://er-api.com", true);
-  x.onload = function() {
+  var x1 = new XMLHttpRequest();
+  x1.open("GET", "https://jsdelivr.net", true);
+  x1.onload = function() {
     try {
-      var d = JSON.parse(x.responseText);
-      var uah = d.rates.UAH;
-      var eur = uah / d.rates.EUR;
-      document.getElementById("usd-sell").textContent = uah.toFixed(2) + " ₴";
-      document.getElementById("eur-sell").textContent = eur.toFixed(2) + " ₴";
-      var n = new Date();
-      document.getElementById("curr-date").textContent = "Оновлено о " + pad(n.getHours()) + ":" + pad(n.getMinutes());
-    } catch (e) {
-      document.getElementById("curr-date").textContent = "Помилка: " + e.message;
-    }
+      var d = JSON.parse(x1.responseText);
+      document.getElementById("usd-sell").textContent = d.usd.uah.toFixed(2) + " ₴";
+      document.getElementById("curr-date").textContent = "Курс на " + d.date;
+    } catch (e) {}
   };
-  x.onerror = function() {
-    document.getElementById("curr-date").textContent = "Мережа заблокована";
+  x1.onerror = function() {
+    document.getElementById("curr-date").textContent = "Помилка завантаження курсу";
   };
-  x.send();
+  x1.send();
+
+  var x2 = new XMLHttpRequest();
+  x2.open("GET", "https://jsdelivr.net", true);
+  x2.onload = function() {
+    try {
+      var d = JSON.parse(x2.responseText);
+      document.getElementById("eur-sell").textContent = d.eur.uah.toFixed(2) + " ₴";
+    } catch (e) {}
+  };
+  x2.send();
 }
 
 loadWeather();
